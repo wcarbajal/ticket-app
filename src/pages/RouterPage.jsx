@@ -16,6 +16,7 @@ import { EscritorioPage } from './Escritorio';
 
 
 export const RouterPage = () => {
+
   const navigate = useNavigate();
 
   return (
@@ -71,8 +72,8 @@ export const RouterPage = () => {
             <Route path="/ingresar" element={<IngresarPage />} />
             <Route path="/cola" element={<ColaPage />} />
             <Route path="/crear" element={<CrearTicket />} />
-            <Route path="/escritorio" element={<EscritorioPage />} />
-            <Route path="*" element={<Navigate to="/" />} />
+            <Route path="/escritorio" element={<EscritorioPage />} /> 
+            <Route path="*" element={<Navigate to="/ingresar" />} />
 
             
             {/* Agrega aquí tus otras rutas */}
