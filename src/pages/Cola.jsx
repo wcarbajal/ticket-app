@@ -1,4 +1,4 @@
-import { Card, Col, List, Row, Typography, Tag } from "antd";
+import { Card, Col, List, Row, Typography, Tag, Divider } from "antd";
 
 const { Title, Text } = Typography;
 
@@ -57,14 +57,12 @@ export const ColaPage = () => {
               <List.Item>
                 <Card
                   style={ { width: 400, marginTop: 16 } }
-                  actions={[
-                  <Tag color="volcano" key="numero">{item.ticketNo}</Tag>,
-                  <Tag color="magenta" key="escritorio">{item.escritorio}</Tag>,
-                  <Tag color="geekblue" key="agente">{item.agente}</Tag>
-                ]}
+                  actions={ [
+                    <Tag color="magenta" key="escritorio">{ item.escritorio }</Tag>,
+                    <Tag color="geekblue" key="agente">{ item.agente }</Tag>
+                  ] }
                 >
-
-                  
+                  <Title>{ item.ticketNo }</Title>
                 </Card>
               </List.Item>
             ) }
@@ -74,12 +72,34 @@ export const ColaPage = () => {
         </Col>
         <Col span={ 12 }>
 
+          <Divider >Historial</Divider>
+          <List
+            dataSource={ data.slice( 3 ) }
+            renderItem={ item => (
+              <List.Item>
+                <List.Item.Meta
+                  title={ ` Ticket No. ${ item.ticketNo } ` }
+                  description={
+                    <>
+                      <Text type="secondary">En el escritorio: </Text>
+                      <Tag color="magenta" key="escritorio">{ item.escritorio }</Tag>
+                      <Text type="secondary">Agente: </Text>
+                      <Tag color="geekblue" key="agente">{ item.agente }</Tag>
+                    </>
+                  }
+                />
+
+
+              </List.Item>
+            ) }
+
+          />
+
+
         </Col>
       </Row>
 
-      <Text >
 
-      </Text>
     </>
   );
 };
