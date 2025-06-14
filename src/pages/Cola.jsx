@@ -1,4 +1,5 @@
 import { Card, Col, List, Row, Typography, Tag, Divider } from "antd";
+import { useHideMenu } from '../hooks/useHideMenu';
 
 const { Title, Text } = Typography;
 
@@ -42,6 +43,8 @@ const data = [
 ];
 
 export const ColaPage = () => {
+
+  useHideMenu(true);
 
   return (
     <>

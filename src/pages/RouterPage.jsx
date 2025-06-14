@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   HomeOutlined,
   UploadOutlined,
@@ -13,15 +13,18 @@ import { IngresarPage } from "./Ingresar";
 import { ColaPage } from './Cola';
 import { CrearTicket } from './CrearTicket';
 import { EscritorioPage } from './Escritorio';
+import { UiContext } from '../contex/UIContext-only';
 
 
 export const RouterPage = () => {
 
   const navigate = useNavigate();
 
+  const { ocultarMenu } = useContext( UiContext )
+
   return (
     <Layout style={{ height: '97vh' }}>
-      <Sider collapsedWidth="0" breakpoint="md">
+      <Sider collapsedWidth="0" breakpoint="md" hidden={ ocultarMenu }>
         <div className="demo-logo-vertical" />
         <Menu
           theme="dark"

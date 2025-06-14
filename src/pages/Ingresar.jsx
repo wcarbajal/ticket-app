@@ -1,21 +1,35 @@
 import { SaveOutlined } from '@ant-design/icons';
 import { Button, Divider, Form, Input, Typography } from 'antd';
+import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import { getUsuarioStorage } from '../helpers/getUsuarioStorage';
 
 const { Title, Text } = Typography;
 
 export const IngresarPage = () => {
 
   const navigate = useNavigate();
+  const [usuario] = useState( getUsuarioStorage() )
+  
 
-  const onFinish = values => {
-    console.log( 'Success:', values );
+
+  const onFinish = ({agente, escritorio}) => {
+    
+    localStorage.setItem('agente', agente)
+    localStorage.setItem('escritorio', escritorio)
+    console.log( 'Success:', agente, escritorio );
     navigate( '/escritorio' );
 
   };
   const onFinishFailed = errorInfo => {
+    console.log("Este es onFinishfailed")
     console.log( 'Failed:', errorInfo );
   };
+
+  if (usuario.agente && usuario.escritorio) {
+    navigate( '/escritorio' );
+    
+  }
 
   return (
     <>
