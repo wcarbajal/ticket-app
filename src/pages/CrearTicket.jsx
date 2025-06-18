@@ -7,17 +7,17 @@ import { SocketContext } from '../contex/UIContext-only';
 const { Title, Text } = Typography;
 
 export const CrearTicket = () => {
-  
+
   useHideMenu( true );
 
   const { socket } = useContext( SocketContext );
-  const [ticket, setTicket] = useState({})
+  const [ ticket, setTicket ] = useState( null );
 
 
   const nuevoTicket = () => {
 
     socket.emit( 'solicitar-ticket', null, ( ticket ) => {
-      setTicket(ticket)
+      setTicket( ticket );
     } );
   };
 
@@ -43,19 +43,26 @@ export const CrearTicket = () => {
 
         </Col>
       </Row>
-      <Row style={ { marginTop: 100 } }>
-        <Col span={ 14 } offset={ 6 } align="center">
 
-          <Text level={ 2 }>
-            Su numero es:
-          </Text>
-          <br />
-          <Text type="success" style={ { fontSize: 55 } }>
-            {ticket.numero}
-          </Text>
+      {
+        ticket && (
+          <Row style={ { marginTop: 100 } }>
+            <Col span={ 14 } offset={ 6 } align="center">
 
-        </Col>
-      </Row>
+              <Text level={ 2 }>
+                Su numero es:
+              </Text>
+              <br />
+              <Text type="success" style={ { fontSize: 55 } }>
+                { ticket.numero }
+              </Text>
+
+            </Col>
+          </Row>
+        )
+      }
+
+
 
 
     </>

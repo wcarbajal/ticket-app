@@ -1,6 +1,6 @@
 import { SaveOutlined } from '@ant-design/icons';
 import { Button, Divider, Form, Input, Typography } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { getUsuarioStorage } from '../helpers/getUsuarioStorage';
 
@@ -25,11 +25,16 @@ export const IngresarPage = () => {
     console.log("Este es onFinishfailed")
     console.log( 'Failed:', errorInfo );
   };
+  
+useEffect(() => {
 
   if (usuario.agente && usuario.escritorio) {
     navigate( '/escritorio' );
     
   }
+}, [navigate, usuario.agente, usuario.escritorio])
+
+  
 
   return (
     <>

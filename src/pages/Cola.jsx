@@ -1,50 +1,34 @@
 import { Card, Col, List, Row, Typography, Tag, Divider } from "antd";
 import { useHideMenu } from '../hooks/useHideMenu';
+import { useContext, useEffect, useState } from 'react';
+import { SocketContext } from '../contex/UIContext-only';
 
 const { Title, Text } = Typography;
 
 
-const data = [
-  {
-    ticketNo: 33,
-    escritorio: 3,
-    agente: 'Fernando Herrera'
-  },
-  {
-    ticketNo: 34,
-    escritorio: 4,
-    agente: 'Melissa Flores'
-  },
-  {
-    ticketNo: 35,
-    escritorio: 5,
-    agente: 'Carlos Castro'
-  },
-  {
-    ticketNo: 36,
-    escritorio: 3,
-    agente: 'Fernando Herrera'
-  },
-  {
-    ticketNo: 37,
-    escritorio: 3,
-    agente: 'Fernando Herrera'
-  },
-  {
-    ticketNo: 38,
-    escritorio: 2,
-    agente: 'Melissa Flores'
-  },
-  {
-    ticketNo: 39,
-    escritorio: 5,
-    agente: 'Carlos Castro'
-  },
-];
+
 
 export const ColaPage = () => {
 
-  useHideMenu(true);
+  useHideMenu( true );
+
+  const { socket } = useContext( SocketContext );
+  const [ tickets, setTickets ] = useState( [] );
+
+
+  useEffect( () => {
+
+
+    socket.on( 'ticket-asignado', ( asignados ) => {
+      setTickets( asignados );
+    } );
+
+    return () => {
+      socket.off( 'ticket-asignado' );
+    };
+
+
+  }, [ socket ] );
 
   return (
     <>
@@ -55,17 +39,17 @@ export const ColaPage = () => {
       <Row>
         <Col span={ 12 }>
           <List
-            dataSource={ data.slice( 0, 3 ) }
-            renderItem={ item => (
+            dataSource={ tickets.slice( 0, 3 ) }
+            renderItem={ ticket => (
               <List.Item>
                 <Card
                   style={ { width: 400, marginTop: 16 } }
                   actions={ [
-                    <Tag color="magenta" key="escritorio">{ item.escritorio }</Tag>,
-                    <Tag color="geekblue" key="agente">{ item.agente }</Tag>
+                    <Tag color="magenta" key="escritorio">{ ticket.escritorio }</Tag>,
+                    <Tag color="geekblue" key="agente">{ ticket.agente }</Tag>
                   ] }
                 >
-                  <Title>{ item.ticketNo }</Title>
+                  <Title>{ ticket.numero }</Title>
                 </Card>
               </List.Item>
             ) }
@@ -77,17 +61,17 @@ export const ColaPage = () => {
 
           <Divider >Historial</Divider>
           <List
-            dataSource={ data.slice( 3 ) }
-            renderItem={ item => (
+            dataSource={ tickets.slice( 3 ) }
+            renderItem={ ticket => (
               <List.Item>
                 <List.Item.Meta
-                  title={ ` Ticket No. ${ item.ticketNo } ` }
+                  title={ ` Ticket No. ${ ticket.numero } ` }
                   description={
                     <>
                       <Text type="secondary">En el escritorio: </Text>
-                      <Tag color="magenta" key="escritorio">{ item.escritorio }</Tag>
+                      <Tag color="magenta" key="escritorio">{ ticket.escritorio }</Tag>
                       <Text type="secondary">Agente: </Text>
-                      <Tag color="geekblue" key="agente">{ item.agente }</Tag>
+                      <Tag color="geekblue" key="agente">{ ticket.agente }</Tag>
                     </>
                   }
                 />
