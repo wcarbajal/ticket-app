@@ -2,6 +2,7 @@ import { Card, Col, List, Row, Typography, Tag, Divider } from "antd";
 import { useHideMenu } from '../hooks/useHideMenu';
 import { useContext, useEffect, useState } from 'react';
 import { SocketContext } from '../contex/UIContext-only';
+import { getUltimos } from '../helpers/getUltimos';
 
 const { Title, Text } = Typography;
 
@@ -29,6 +30,11 @@ export const ColaPage = () => {
 
 
   }, [ socket ] );
+
+  useEffect(() => {
+    getUltimos().then( setTickets )
+  }, [])
+  
 
   return (
     <>
